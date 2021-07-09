@@ -14,41 +14,41 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/test;
-import ballerina/time;
+//import ballerina/test;
+//import ballerina/time;
+//
+//@test:Config {enable: true}
+//isolated function testUnaryTimestampWithGreeting() returns error? {
+//    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
+//    Greeting greeting = check utsClient->getGreeting("Hello");
+//    time:Utc customTime = [1196676930, 0.12];
+//    Greeting expectedGreeting = {"name": "Hello","time": customTime};
+//    test:assertEquals(greeting, expectedGreeting);
+//}
 
-@test:Config {enable: true}
-isolated function testUnaryTimestampWithGreeting() returns error? {
-    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
-    Greeting greeting = check utsClient->getGreeting("Hello");
-    time:Utc customTime = [1196676930, 0.12];
-    Greeting expectedGreeting = {"name": "Hello","time": customTime};
-    test:assertEquals(greeting, expectedGreeting);
-}
-
-@test:Config {enable: true}
-function testUnaryTimestampWithBidiGreeting() returns error? {
-    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
-    time:Utc customTime = [1228302930, 0.12];
-    Greeting expectedGreeting = {"name": "Hello", "time": customTime};
-    Greeting greeting = check utsClient->getBiGreeting(expectedGreeting);
-    test:assertEquals(greeting, expectedGreeting);
-}
-
-@test:Config {enable: true}
-isolated function testUnaryTimestampWithBidiTime() returns error? {
-    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
-    time:Utc sendingTime = check time:utcFromString("2008-12-03T11:15:30.120Z");
-    time:Utc receivedTime = check utsClient->getBiTime(sendingTime);
-    time:Utc expectedTime = check time:utcFromString("2012-12-03T11:13:30.472Z");
-    test:assertEquals(receivedTime, expectedTime);
-}
-
-@test:Config {enable: true}
-isolated function testUnaryTimestampWithBidiTimeContext() returns error? {
-    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
-    time:Utc sendingTime = check time:utcFromString("2008-12-03T11:15:30.120Z");
-    ContextTimestamp result = check utsClient->getBiTimeContext(sendingTime);
-    time:Utc expectedTime = check time:utcFromString("2012-12-03T11:13:30.472Z");
-    test:assertEquals(result.content, expectedTime);
-}
+//@test:Config {enable: true}
+//function testUnaryTimestampWithBidiGreeting() returns error? {
+//    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
+//    time:Utc customTime = [1228302930, 0.12];
+//    Greeting expectedGreeting = {"name": "Hello", "time": customTime};
+//    Greeting greeting = check utsClient->getBiGreeting(expectedGreeting);
+//    test:assertEquals(greeting, expectedGreeting);
+//}
+//
+//@test:Config {enable: true}
+//isolated function testUnaryTimestampWithBidiTime() returns error? {
+//    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
+//    time:Utc sendingTime = check time:utcFromString("2008-12-03T11:15:30.120Z");
+//    time:Utc receivedTime = check utsClient->getBiTime(sendingTime);
+//    time:Utc expectedTime = check time:utcFromString("2012-12-03T11:13:30.472Z");
+//    test:assertEquals(receivedTime, expectedTime);
+//}
+//
+//@test:Config {enable: true}
+//isolated function testUnaryTimestampWithBidiTimeContext() returns error? {
+//    UnaryTimestampServiceClient utsClient = check new ("http://localhost:9147");
+//    time:Utc sendingTime = check time:utcFromString("2008-12-03T11:15:30.120Z");
+//    ContextTimestamp result = check utsClient->getBiTimeContext(sendingTime);
+//    time:Utc expectedTime = check time:utcFromString("2012-12-03T11:13:30.472Z");
+//    test:assertEquals(result.content, expectedTime);
+//}

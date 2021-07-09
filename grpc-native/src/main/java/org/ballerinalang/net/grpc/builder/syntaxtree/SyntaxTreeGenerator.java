@@ -79,6 +79,7 @@ import static org.ballerinalang.net.grpc.builder.syntaxtree.constants.SyntaxTree
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.CallerUtils.getCallerClass;
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.ClientUtils.getStreamingClientClass;
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.ClientUtils.getStreamingClientFunction;
+import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.CommonUtils.GOOGLE_PROTOBUF_DURATION_PROTO;
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.CommonUtils.GOOGLE_PROTOBUF_TIMESTAMP_PROTO;
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.CommonUtils.checkForImportsInServices;
 import static org.ballerinalang.net.grpc.builder.syntaxtree.utils.CommonUtils.checkForImportsInStub;
@@ -112,7 +113,7 @@ public class SyntaxTreeGenerator {
                     "ballerina", "grpc"
             );
             imports = imports.add(importForGrpc);
-            if (checkForImportsInStub(stubFile, GOOGLE_PROTOBUF_TIMESTAMP_PROTO)) {
+            if (checkForImportsInStub(stubFile, GOOGLE_PROTOBUF_TIMESTAMP_PROTO) || checkForImportsInStub(stubFile, GOOGLE_PROTOBUF_DURATION_PROTO)) {
                 ImportDeclarationNode importForTime = Imports.getImportDeclarationNode(
                         "ballerina", "time"
                 );
@@ -236,7 +237,7 @@ public class SyntaxTreeGenerator {
         methodList.addAll(serviceStub.getServerStreamingFunctions());
         methodList.addAll(serviceStub.getBidiStreamingFunctions());
 
-        if (checkForImportsInServices(methodList, "time:Utc")) {
+        if (checkForImportsInServices(methodList, "time:Utc") || checkForImportsInServices(methodList, "time:Seconds")) {
             ImportDeclarationNode importForTime = Imports.getImportDeclarationNode(
                     "ballerina", "time"
             );

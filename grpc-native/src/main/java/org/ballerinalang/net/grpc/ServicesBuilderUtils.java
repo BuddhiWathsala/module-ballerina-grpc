@@ -286,7 +286,7 @@ public class ServicesBuilderUtils {
      * @return Mapping BType of the proto type.
      */
     static Type getBallerinaValueType(Module module, String protoType) {
-
+        //
         if (protoType.equalsIgnoreCase(WRAPPER_DOUBLE_MESSAGE) || protoType
                 .equalsIgnoreCase(WRAPPER_FLOAT_MESSAGE)) {
             return PredefinedTypes.TYPE_FLOAT;
@@ -303,6 +303,8 @@ public class ServicesBuilderUtils {
             return PredefinedTypes.TYPE_NULL;
         } else if (protoType.equalsIgnoreCase(WRAPPER_BYTES_MESSAGE)) {
             return TypeCreator.createArrayType(PredefinedTypes.TYPE_BYTE);
+        } else if (protoType.equals("Duration")) {
+            return PredefinedTypes.TYPE_DECIMAL;
         } else {
             return TypeCreator.createRecordType(protoType, module, 0, true,
                     TypeFlags.asMask(TypeFlags.ANYDATA, TypeFlags.PURETYPE));

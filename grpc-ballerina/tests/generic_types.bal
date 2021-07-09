@@ -14,10 +14,10 @@
 // specific language governing permissions and limitations
 // under the License.
 
-public type ContextString record {|
-    string content;
-    map<string|string[]> headers;
-|};
+//public type ContextString record {|
+//    string content;
+//    map<string|string[]> headers;
+//|};
 
 public type ContextStringStream record {|
     stream<string, error?> content;

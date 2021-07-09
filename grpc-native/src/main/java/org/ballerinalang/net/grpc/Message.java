@@ -31,6 +31,7 @@ import io.ballerina.runtime.api.types.Type;
 import io.ballerina.runtime.api.types.UnionType;
 import io.ballerina.runtime.api.utils.StringUtils;
 import io.ballerina.runtime.api.values.BArray;
+import io.ballerina.runtime.api.values.BDecimal;
 import io.ballerina.runtime.api.values.BMap;
 import io.ballerina.runtime.api.values.BString;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -147,6 +148,8 @@ public class Message {
                     Arrays.asList(PredefinedTypes.TYPE_INT, PredefinedTypes.TYPE_DECIMAL));
             bArray = ValueCreator.createTupleValue(tupleType);
             bMessage = bArray;
+        } else if (type.getTag() == TypeTags.DECIMAL_TAG) {
+            bMessage = ValueCreator.createDecimalValue(new BigDecimal(0));
         }
 
         if (input == null) {
@@ -268,7 +271,9 @@ public class Message {
                         } else if (bArray != null
                                 && fieldDescriptor.getFullName().equals(GOOGLE_PROTOBUF_TIMESTAMP_SECONDS)) {
                             bArray.add(0, input.readInt64());
-                        } else {
+                        } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.seconds")) {
+                            bMessage = ValueCreator.createDecimalValue(new BigDecimal(input.readInt64()));
+                        } else { // nrr
                             bMessage = input.readInt64();
                         }
                         break;
@@ -313,7 +318,12 @@ public class Message {
                             BigDecimal nanos = new BigDecimal(input.readInt32())
                                     .divide(ANALOG_GIGA, MathContext.DECIMAL128);
                             bArray.add(1, ValueCreator.createDecimalValue(nanos));
-                        } else {
+                        } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.nanos")) {
+                            BigDecimal nanos = new BigDecimal(input.readInt32())
+                                    .divide(ANALOG_GIGA, MathContext.DECIMAL128);
+                            BigDecimal secondsValue = ((BDecimal) bMessage).value();
+                            bMessage = ValueCreator.createDecimalValue(secondsValue.add(nanos));
+                        } else { // nrr
                             bMessage = input.readInt32();
                         }
                         break;
@@ -568,12 +578,16 @@ public class Message {
                         } else {
                             output.writeInt64(fieldDescriptor.getNumber(), (long) bValue);
                         }
-                    } else if (bMessage instanceof Long) {
-                        output.writeInt64(fieldDescriptor.getNumber(), (long) bMessage);
                     } else if (bMessage instanceof BArray
                             && fieldDescriptor.getFullName().equals(GOOGLE_PROTOBUF_TIMESTAMP_SECONDS)) {
                         output.writeInt64(fieldDescriptor.getNumber(), (long) (bArray.get(0)));
+                    } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.seconds")) {
+                        output.writeInt64(fieldDescriptor.getNumber(), ((BDecimal) bMessage).value().intValue());
+                    } else if (bMessage instanceof Long) {
+                        output.writeInt64(fieldDescriptor.getNumber(), (long) bMessage);
                     }
+                    // fieldDescriptor.getFullName().equals("google.protobuf.Duration.seconds") && bMessage instanceof BDecimal
+                    // ((BDecimal) bMessage).value().intValue()
                     break;
                 }
                 case DescriptorProtos.FieldDescriptorProto.Type.TYPE_UINT64_VALUE: {
@@ -604,13 +618,17 @@ public class Message {
                         } else {
                             output.writeInt32(fieldDescriptor.getNumber(), getIntValue(bValue));
                         }
-                    } else if (bMessage instanceof Long) {
-                        output.writeInt32(fieldDescriptor.getNumber(), getIntValue(bMessage));
                     } else if (bMessage instanceof BArray
                             && fieldDescriptor.getFullName().equals(GOOGLE_PROTOBUF_TIMESTAMP_NANOS)) {
                         BigDecimal nanos = new BigDecimal((bArray).get(1)
                                 .toString()).multiply(ANALOG_GIGA);
                         output.writeInt32(fieldDescriptor.getNumber(), nanos.intValue());
+                    } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.nanos")) {
+                        int intVal = ((BDecimal) bMessage).value().intValue();
+                        BigDecimal b = ((BDecimal) bMessage).value().subtract(new BigDecimal(intVal));
+                        output.writeInt32(fieldDescriptor.getNumber(), b.multiply(ANALOG_GIGA).intValue());
+                    } else if (bMessage instanceof Long) {
+                        output.writeInt32(fieldDescriptor.getNumber(), getIntValue(bMessage));
                     }
                     break;
                 }
@@ -681,7 +699,7 @@ public class Message {
                     break;
                 }
                 case DescriptorProtos.FieldDescriptorProto.Type.TYPE_MESSAGE_VALUE: {
-                    if (bBMap != null && bBMap.containsKey(bFieldName)) {
+                    if (bBMap != null && bBMap.containsKey(bFieldName)) { // msg
                         Object bValue = bBMap.get(bFieldName);
                         if (bValue instanceof BArray
                                 && fieldDescriptor.getMessageType().getFullName().equals(GOOGLE_PROTOBUF_TIMESTAMP)) {
@@ -824,6 +842,9 @@ public class Message {
                         BArray array = (BArray) bMessage;
                         size += com.google.protobuf.CodedOutputStream.computeInt64Size(fieldDescriptor
                                 .getNumber(), array.getInt(0));
+                    } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.seconds")) {
+                        size += com.google.protobuf.CodedOutputStream.computeInt64Size(fieldDescriptor
+                                .getNumber(), ((BDecimal) bMessage).value().intValue());
                     }
                     break;
                 }
@@ -869,6 +890,11 @@ public class Message {
                                 .toString()).multiply(ANALOG_GIGA, MathContext.DECIMAL128);
                         size += com.google.protobuf.CodedOutputStream.computeInt32Size(fieldDescriptor
                                 .getNumber(), nanos.intValue());
+                    } else if (bMessage instanceof BDecimal && fieldDescriptor.getFullName().equals("google.protobuf.Duration.nanos")) {
+                        int intVal = ((BDecimal) bMessage).value().intValue();
+                        BigDecimal b = ((BDecimal) bMessage).value().subtract(new BigDecimal(intVal)).multiply(ANALOG_GIGA, MathContext.DECIMAL128);
+                        size += com.google.protobuf.CodedOutputStream.computeInt32Size(fieldDescriptor
+                                .getNumber(), b.intValue());
                     }
                     break;
                 }

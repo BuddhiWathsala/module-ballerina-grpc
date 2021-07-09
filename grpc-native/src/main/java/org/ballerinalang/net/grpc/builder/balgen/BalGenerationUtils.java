@@ -80,6 +80,8 @@ public class BalGenerationUtils {
                 return null;
             } case ".google.protobuf.Timestamp": {
                 return "time:Utc";
+            } case ".google.protobuf.Duration": {
+                return "time:Seconds";
             }
             default: { // to handle structs
                 return protoType.substring(protoType.lastIndexOf

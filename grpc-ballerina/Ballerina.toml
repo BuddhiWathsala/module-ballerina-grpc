@@ -1,94 +1,94 @@
 [package]
 org = "ballerina"
 name = "grpc"
-version = "@toml.version@"
+version = "0.8.0-beta.2"
 
 [[platform.java11.dependency]]
-path = "../grpc-native/build/libs/grpc-native-@project.version@.jar"
+path = "../grpc-native/build/libs/grpc-native-0.8.0-beta.2-SNAPSHOT.jar"
 groupId = "ballerina"
 artifactId = "grpc"
-version = "@project.version@"
+version = "0.8.0-beta.2-SNAPSHOT"
 
 [[platform.java11.dependency]]
-path = "../grpc-test-utils/build/libs/grpc-test-utils-@project.version@.jar"
+path = "../grpc-test-utils/build/libs/grpc-test-utils-0.8.0-beta.2-SNAPSHOT.jar"
 groupId = "org.ballerinalang"
 scope = "testOnly"
 artifactId = "grpc"
-version = "@project.version@"
+version = "0.8.0-beta.2-SNAPSHOT"
 
 [[platform.java11.dependency]]
-path = "./lib/ballerina-cli-@ballerinalang.version@.jar"
+path = "./lib/ballerina-cli-2.0.0-beta.2-20210704-232600-b9b185e9.jar"
 groupId = "org.ballerinalang"
 scope = "testOnly"
 artifactId = "ballerina-cli"
-version = "@ballerinalang.version@"
+version = "2.0.0-beta.2-20210704-232600-b9b185e9"
 
 [[platform.java11.dependency]]
-path = "./lib/antlr4-runtime-@antlr.version@.jar"
+path = "./lib/antlr4-runtime-4.5.1.wso2v1.jar"
 groupId = "org.wso2.orbit.org.antlr"
 scope = "testOnly"
 artifactId = "antlr4-runtime"
-version = "@antlr.version@"
+version = "4.5.1.wso2v1"
 
 [[platform.java11.dependency]]
-path = "./lib/http-native-@http.native.version@.jar"
+path = "./lib/http-native-1.1.0-beta.2-20210705-025900-45651fc.jar"
 groupId = "org.ballerinalang"
 artifactId = "http-native"
-version = "@http.native.version@"
+version = "1.1.0-beta.2-20210705-025900-45651fc"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-common-@netty.version@.jar"
+path = "./lib/netty-common-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-common"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-buffer-@netty.version@.jar"
+path = "./lib/netty-buffer-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-buffer"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-transport-@netty.version@.jar"
+path = "./lib/netty-transport-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-transport"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-resolver-@netty.version@.jar"
+path = "./lib/netty-resolver-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-resolver"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-handler-@netty.version@.jar"
+path = "./lib/netty-handler-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-handler"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-codec-http-@netty.version@.jar"
+path = "./lib/netty-codec-http-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-codec-http"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-codec-@netty.version@.jar"
+path = "./lib/netty-codec-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-codec"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-handler-proxy-@netty.version@.jar"
+path = "./lib/netty-handler-proxy-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-handler-proxy"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-codec-http2-@netty.version@.jar"
+path = "./lib/netty-codec-http2-4.1.65.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-codec-http2"
-version = "@netty.version@"
+version = "4.1.65.Final"
 
 [[platform.java11.dependency]]
 path = "./lib/commons-pool-1.5.6.wso2v1.jar"
@@ -109,10 +109,10 @@ artifactId = "bcpkix-jdk15on"
 version = "1.61"
 
 [[platform.java11.dependency]]
-path = "./lib/netty-tcnative-boringssl-static-@nettytcnative.version@.jar"
+path = "./lib/netty-tcnative-boringssl-static-2.0.39.Final.jar"
 groupId = "io.netty"
 artifactId = "netty-tcnative-boringssl-static"
-version = "@nettytcnative.version@"
+version = "2.0.39.Final"
 
 [[platform.java11.dependency]]
 path = "./lib/protobuf-java-3.9.1.jar"
@@ -127,13 +127,13 @@ artifactId = "proto-google-common-protos"
 version = "1.17.0"
 
 [[platform.java11.dependency]]
-path = "./lib/formatter-core-@ballerinalang.version@.jar"
+path = "./lib/formatter-core-2.0.0-beta.2-20210704-232600-b9b185e9.jar"
 groupId = "org.ballerinalang"
 artifactId = "formatter-core"
-version = "@ballerinalang.version@"
+version = "2.0.0-beta.2-20210704-232600-b9b185e9"
 
 [[platform.java11.dependency]]
-path = "./lib/ballerina-parser-@ballerinalang.version@.jar"
+path = "./lib/ballerina-parser-2.0.0-beta.2-20210704-232600-b9b185e9.jar"
 groupId = "org.ballerinalang"
 artifactId = "ballerina-parser"
-version = "@ballerinalang.version@"
+version = "2.0.0-beta.2-20210704-232600-b9b185e9"
