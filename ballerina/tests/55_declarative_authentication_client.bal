@@ -209,7 +209,7 @@ function testHello55JWTAuthUnaryInvalidPermission() returns error? {
     }
 }
 
-@test:Config {enable: false}
+@test:Config {enable: true}
 function testHello55LdapAuth() returns error? {
     CredentialsConfig config = {
         username: "alice",
@@ -294,7 +294,7 @@ function testHello55JWTAuthWithEmptyScope() returns error? {
     }
 }
 
-@test:Config {enable: false}
+@test:Config {enable: true}
 function testHello55LdapAuthWithEmptyScope() returns error? {
     CredentialsConfig config = {
         username: "alice",
