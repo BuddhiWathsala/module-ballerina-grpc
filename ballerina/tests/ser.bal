@@ -16,6 +16,8 @@
 
 listener Listener ep55WithScopes = new (9155);
 listener Listener ep55EmptyScope = new (9255);
+listener Listener ep55WithLdapWithScopes = new (9256);
+listener Listener ep55WithLdapEmptyScope = new (9257);
 
 JwtValidatorConfig jwtAuthConfig55 = {
     issuer: "wso2",
@@ -86,7 +88,7 @@ OAuth2IntrospectionConfigWithScopes oauth2config55EmptyScope = {
     oauth2IntrospectionConfig: oauth2IntroConfig55
 };
 
-LdapUserStoreConfigWithScopes ldapUserStoreconfig55WithScopes = {
+ListenerAuthConfig ldapUserStoreconfig55WithScopes = {
     ldapUserStoreConfig: ldapUserStoreConfig,
     scopes: "developer"
 };
@@ -104,16 +106,11 @@ FileUserStoreConfigWithScopes fileUserStoreConfig55EmptyScope  = {
     fileUserStoreConfig: {}
 };
 
-@ServiceConfig {
-    auth: [
-        jwtAuthConfig55WithScopes,
-        oauth2config55WithScopes,
-        fileUserStoreConfig55WithScopes,
-        ldapUserStoreconfig55WithScopes
-    ]
-}
-@ServiceDescriptor {descriptor: ROOT_DESCRIPTOR_55, descMap: getDescriptorMap55()}
-service "helloWorld55" on ep55WithScopes {
+ListenerAuthConfig[] arr = [ldapUserStoreconfig55WithScopes];
+
+service object {} helloWorld55 = @ServiceConfig{auth:arr}
+@ServiceDescriptor{descriptor: ROOT_DESCRIPTOR_55, descMap: getDescriptorMap55()}
+service object {
 
     remote function hello55BiDiWithCaller(HelloWorld55StringCaller caller,
      stream<string, Error?> clientStream) returns error? {
@@ -123,7 +120,7 @@ service "helloWorld55" on ep55WithScopes {
         check caller->complete();
     }
 
-    remote function hello55BiDiWithReturn(stream<string, Error?> clientStream) 
+    remote function hello55BiDiWithReturn(stream<string, Error?> clientStream)
     returns stream<string, Error?>|error? {
         return clientStream;
     }
@@ -153,21 +150,5 @@ service "helloWorld55" on ep55WithScopes {
         }
         check caller->complete();
     }
-}
+};
 
-@ServiceConfig {
-    auth: [
-        jwtAuthConfig55EmptyScope,
-        oauth2config55EmptyScope,
-        fileUserStoreConfig55EmptyScope,
-        ldapUserStoreconfig55EmptyScope
-    ]
-}
-@ServiceDescriptor {descriptor: ROOT_DESCRIPTOR_55, descMap: getDescriptorMap55()}
-service "helloWorld55EmptyScope" on ep55EmptyScope {
-
-    remote function hello55EmptyScope(HelloWorld55EmptyScopeStringCaller caller, string value) returns error? {
-        check caller->sendString(value);
-        check caller->complete();
-    }
-}

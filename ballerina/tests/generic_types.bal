@@ -13,6 +13,7 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+import ballerina/jballerina.java;
 
 public type ContextString record {|
     string content;
@@ -47,3 +48,8 @@ public class StringStream {
         return self.anydataStream.close();
     }
 }
+
+isolated function isWindowsEnvironment() returns boolean = @java:Method {
+    name: "isWindowsEnvironment",
+    'class: "io.ballerina.stdlib.grpc.testutils.EnvironmentTestUtils"
+} external;
