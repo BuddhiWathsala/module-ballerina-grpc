@@ -108,7 +108,8 @@ FileUserStoreConfigWithScopes fileUserStoreConfig55EmptyScope  = {
     auth: [
         jwtAuthConfig55WithScopes,
         oauth2config55WithScopes,
-        fileUserStoreConfig55WithScopes
+        fileUserStoreConfig55WithScopes,
+        ldapUserStoreconfig55WithScopes
     ]
 }
 @ServiceDescriptor {descriptor: ROOT_DESCRIPTOR_55, descMap: getDescriptorMap55()}
@@ -158,7 +159,8 @@ service "helloWorld55" on ep55WithScopes {
     auth: [
         jwtAuthConfig55EmptyScope,
         oauth2config55EmptyScope,
-        fileUserStoreConfig55EmptyScope
+        fileUserStoreConfig55EmptyScope,
+        ldapUserStoreconfig55EmptyScope
     ]
 }
 @ServiceDescriptor {descriptor: ROOT_DESCRIPTOR_55, descMap: getDescriptorMap55()}
